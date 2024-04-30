@@ -50,8 +50,7 @@ def window(source_filepaths):
         sg.popup(f"例外が発生しました:{exec_type.__name__}\n\n{exec_message}")
 
 
-# if __name__ == "__main__":
-# カレントディレクトリを取得
+
 current_path = os.path.dirname(__file__)
 files = []
 
