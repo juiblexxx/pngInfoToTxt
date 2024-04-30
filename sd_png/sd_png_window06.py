@@ -5,7 +5,6 @@
 # モジュールをインポート
 import sys
 import traceback
-import datetime
 import PySimpleGUI as sg
 
 from sd_png import sd_png_def as spgd
@@ -17,8 +16,6 @@ def window():
         files = filespaths.split(";")
         num = 0
         for file in files:
-            # timedelta = datetime.timedelta(minutes=num)
-            # spgd.add_file_timestamp(file, timedelta)
             spgd.edit_file_timestamp(file, "-", 1)
             num = num + 1
 
