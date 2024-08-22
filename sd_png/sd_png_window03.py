@@ -70,8 +70,8 @@ def window():
                         if model_name == "":    # Loraが見つからないファイルだったので次のファイルチェックへ
                             pass
                         else:
-                            # YYYYmmdd_ をプレフィックスに付加したディレクトリを作成してファイルを移動する
-                            model_name = f"{spgd.get_file_timestamp(file, 1)}_{model_name}"
+                            # YYYYmmdd_ をプレフィックスに付加したディレクトリを作成してファイルを移動する(やめた)
+                            # model_name = f"{spgd.get_file_timestamp(file, 1)}_{model_name}"
                             model_dir = os.path.join(parent_path, model_name)
                             if not os.path.isdir(model_dir):
                                 os.makedirs(model_dir, exist_ok=True)

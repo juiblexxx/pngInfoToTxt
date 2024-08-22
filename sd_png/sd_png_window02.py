@@ -51,7 +51,6 @@ def window():
                         # ファイルの移動（基準ファイルと拡張子が同一なら）
                         # file = file.replace('/', os.sep)
                         file_extention = os.path.splitext(file)[1]
-
                         if file_extention == base_extention:
                             model_name = spgd.get_png_model_name(file)  # 読み込んだファイルからモデル名を取得
                             if date_dir_name == True:
