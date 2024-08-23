@@ -1,5 +1,4 @@
 Backup/*
 __pycache__/*
 sd_png/__pycache__/*
-input_history.txt
-pnginfo.txt
+*.txt

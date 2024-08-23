@@ -19,6 +19,7 @@ def window():
 
     layout = [
         [sg.Text(spgd.SG_STR_INPUT_01), sg.Input(key=spgd.SG_KEY_INPUT_01, enable_events=True)],
+        [sg.Checkbox(spgd.SG_STR_CHECKBOX_03, key=spgd.SG_KEY_CHECKBOX_03, default=False)],
         [sg.Text(spgd.SG_STR_HISTORY_01), sg.Combo(key=spgd.SG_KEY_HISTORY_01, size=(30, 1), enable_events=True, values=input_history)],
         [sg.Checkbox(spgd.SG_STR_CHECKBOX_01, key=spgd.SG_KEY_CHECKBOX_01, default=True)],
         [sg.Text(spgd.SG_STR_FILESELECT_01)],
@@ -46,15 +47,17 @@ def window():
             # 入力値の取得
             lora_name = values[spgd.SG_KEY_INPUT_01]
             additional_dir_name = values[spgd.SG_KEY_CHECKBOX_01]
+            history_loop = values[spgd.SG_KEY_CHECKBOX_03]
 
-            if lora_name == "":
-                sg.popup(spgd.SG_EXCEPT_NOLORA)  # Lora名称指定は必須
-                break
+            if history_loop == False :  # history使用なしなら
+                if lora_name == "":
+                    sg.popup(spgd.SG_EXCEPT_NOLORA)  # Lora名称指定は必須
+                    break
 
-            # 入力履歴に追加
-            if lora_name not in input_history:
-                input_history.append(lora_name)
-                spgd.save_history(input_history)
+                # 入力履歴に追加
+                if lora_name not in input_history:
+                    input_history.append(lora_name)
+                    spgd.save_history(input_history)
 
             base_file = sg.popup_get_file(spgd.SG_STR_FILESELECT_01, title=spgd.SG_TTL_FILESELECT_01, multiple_files=False)  # 基準となるファイルを取得
 
@@ -62,20 +65,28 @@ def window():
                 if os.path.isfile(base_file):
                     # 振分先ディレクトリパスを作成する為の親パスとして取得しておく
                     parent_path = os.path.dirname(base_file)
-                    files = [os.path.join(parent_path, file_name) for file_name in os.listdir(parent_path) if os.path.isfile(os.path.join(parent_path, file_name))]  # ディレクトリを取得してしまわないようisfileでファイルリストを取取得
 
-                    for file in files:
-                        # lora_nameにもとづき読み込んだファイルから振分先ディレクトリ名を取得
-                        model_name = spgd.get_png_input_lora_name(file, lora_name, additional_dir_name)
-                        if model_name == "":    # Loraが見つからないファイルだったので次のファイルチェックへ
-                            pass
-                        else:
-                            # YYYYmmdd_ をプレフィックスに付加したディレクトリを作成してファイルを移動する(やめた)
-                            # model_name = f"{spgd.get_file_timestamp(file, 1)}_{model_name}"
-                            model_dir = os.path.join(parent_path, model_name)
-                            if not os.path.isdir(model_dir):
-                                os.makedirs(model_dir, exist_ok=True)
-                            shutil.move(file, model_dir)
+                    lora_list = []
+                    if history_loop == False:
+                        lora_list.append(lora_name)
+                    else:
+                        lora_list = input_history
+
+                    for check_lora in lora_list:
+                        files = [os.path.join(parent_path, file_name) for file_name in os.listdir(parent_path) if os.path.isfile(os.path.join(parent_path, file_name))]  # ディレクトリを取得してしまわないようisfileでファイルリストを取取得
+
+                        for file in files:
+                            # check_loraにもとづき読み込んだファイルから振分先ディレクトリ名を取得
+                            model_name = spgd.get_png_input_lora_name(file, check_lora, additional_dir_name)
+                            if model_name == "":    # Loraが見つからないファイルだったので次のファイルチェックへ
+                                pass
+                            else:
+                                # YYYYmmdd_ をプレフィックスに付加したディレクトリを作成してファイルを移動する(やめた)
+                                # model_name = f"{spgd.get_file_timestamp(file, 1)}_{model_name}"
+                                model_dir = os.path.join(parent_path, model_name)
+                                if not os.path.isdir(model_dir):
+                                    os.makedirs(model_dir, exist_ok=True)
+                                shutil.move(file, model_dir)
                     break   # ループ終了
 
             except Exception as e:

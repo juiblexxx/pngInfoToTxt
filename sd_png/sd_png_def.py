@@ -49,6 +49,9 @@ SG_KEY_CHECKBOX_01 = "-CHECKBOX01-"
 SG_STR_CHECKBOX_02 = "ディレクトリ名に日付を含める？"
 SG_KEY_CHECKBOX_02 = "-CHECKBOX02-"
 
+SG_STR_CHECKBOX_03 = "履歴一括処理"
+SG_KEY_CHECKBOX_03 = "-CHECKBOX03-"
+
 SG_EXCEPT_NOFILE = "ファイルの指定がないのでキャンセルします"
 SG_EXCEPT_NOLORA = "Lora名の指定がないのでキャンセルします"
 
