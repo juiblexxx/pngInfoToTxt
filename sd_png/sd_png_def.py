@@ -263,6 +263,7 @@ def get_png_model_name(png_file: str) -> str:
 def get_png_input_lora_name(png_file: str, input_input_lora_name: str, additional_dir_name: bool) -> str:
     """
     pngファイルのメタデータからLora名を返す
+    限りなく先頭に近い方を取得する
     マッチしなければ空欄を返す
 
     Args:
@@ -292,8 +293,7 @@ def get_png_input_lora_name(png_file: str, input_input_lora_name: str, additiona
 
         for mkey, mvalue in metadata.items():
             for line in mvalue.splitlines():    # どの行に情報があるか不明なので見つかるまで検索する
-                match = re.search(
-                    f"<(lora|lyco):{input_input_lora_name}:-?\d.*>", line)
+                match = re.search(f"<(lora|lyco):{input_input_lora_name}:-?\d.*>", line)
 
                 if match:
                     if additional_dir_name == True:
