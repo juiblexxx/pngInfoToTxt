@@ -21,7 +21,7 @@ def window():
         [sg.Text(spgd.SG_STR_INPUT_01), sg.Input(key=spgd.SG_KEY_INPUT_01, enable_events=True)],
         [sg.Checkbox(spgd.SG_STR_CHECKBOX_03, key=spgd.SG_KEY_CHECKBOX_03, default=False)],
         [sg.Text(spgd.SG_STR_HISTORY_01), sg.Combo(key=spgd.SG_KEY_HISTORY_01, size=(30, 1), enable_events=True, values=input_history)],
-        [sg.Checkbox(spgd.SG_STR_CHECKBOX_01, key=spgd.SG_KEY_CHECKBOX_01, default=True)],
+        [sg.Checkbox(spgd.SG_STR_CHECKBOX_01, key=spgd.SG_KEY_CHECKBOX_01, default=False)],
         [sg.Text(spgd.SG_STR_FILESELECT_01)],
         [sg.Button(spgd.SG_STR_EXECUTE_01, key=spgd.SG_KEY_EXECUTE_01), sg.Button(spgd.SG_STR_CANCEL_01, key=spgd.SG_KEY_CANCEL_01)],
     ]
